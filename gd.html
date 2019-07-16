@@ -1,0 +1,207 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width">
+    <style>
+        html,
+        body,
+        #container {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+    <title>奉贤自来水区域编辑工具</title>
+    <link rel="stylesheet" href="https://a.amap.com/jsapi_demos/static/demo-center/css/demo-center.css" />
+    <script src="https://webapi.amap.com/maps?v=1.4.15&key=3e4097407d9f6a14b3dcdd408a898e5a&plugin=AMap.PolyEditor"></script>
+    <script src="https://a.amap.com/jsapi_demos/static/demo-center/js/demoutils.js"></script>
+</head>
+<body>
+<div id="container"></div>
+<div class="input-card" style="width: 250px">
+    <ul>
+        <li>1.编辑可以编辑范围</li>
+        <li>2.双击范围弹出范围坐标</li>
+        <li>3.拖动移动供水区域位置</li>
+        <li>4.右键删除区域</li>
+        <li>5.点击保存存储至本地</li>
+    </ul>
+    <button class="btn" onclick="addGxfw('','')" style="margin-bottom: 5px">新建供水范围</button>
+    <button class="btn" onclick="contorlEdit('open')" style="margin-bottom: 5px">开始编辑</button>
+    <button class="btn" onclick="contorlEdit('close')">记得点保存编辑哟</button>
+</div>
+<script type="text/javascript">
+
+    let defaultPath= [
+        [121.403322, 30.920255],
+        [121.410703, 30.897555],
+        [121.402292, 30.892353],
+        [121.389846, 30.891365]
+    ]
+
+    //编辑器数组
+    polyEditorArray=[]
+    //面数组
+    polyArray=[]
+    //供水区域名称数组
+    areaNameArray=[]
+
+    var map = new AMap.Map("container", {
+        center: [121.474042,30.917795],
+        zoom: 14
+    });
+
+
+    init()
+
+
+
+    //初始化
+    function init() {
+        //获取所有存储path对象数组
+        if (localStorage.getItem("ps")){
+            paths=JSON.parse(localStorage.getItem("ps"))
+            areaNameArray=JSON.parse(localStorage.getItem("names"))
+            console.log(areaNameArray[4])
+            paths=pathFormat(paths)
+            for(let i=0;i<paths.length;i++){
+                addGxfw("",areaNameArray[i],paths[i])
+            }
+        }
+    }
+    
+
+
+    //增加供水范围
+    function addGxfw(flag,name,path=defaultPath){
+        var polygon = new AMap.Polygon({
+            path: path,
+            strokeColor: "#FF33FF",
+            strokeWeight: 1,
+            strokeOpacity: 1,
+            fillOpacity: 0.5,
+            fillColor: '#1791fc',
+            zIndex: 50,
+            draggable:true
+        })
+
+        map.add(polygon)
+        // map.add(polygon1)
+        polyArray.push(polygon)
+        polygon.setExtData(name)
+        // 缩放地图到合适的视野级别
+        map.setFitView(polyArray)
+
+        polyEditor = new AMap.PolyEditor(map, polygon)
+
+        polyEditorArray.push(polyEditor)
+
+
+        polygon.on('dblclick',function (event) {
+            console.log((event.target.getPath()))
+            let singleAreaPathJson=pathFormat([event.target.getPath()])
+            console.log(singleAreaPathJson)
+            log.info("展示坐标范围")
+            alert(JSON.stringify(singleAreaPathJson))
+
+        })
+
+        polygon.on('rightclick',function (event) {
+            index=polyArray.indexOf(event.target)
+            console.log(index)
+            if (confirm("确认删除这个供水范围?")){
+                map.remove(polyArray[index])
+                polyArray.splice(index,1)
+                contorlEdit('close')
+
+            }
+
+        })
+
+        // polyEditor.on('addnode', function(event) {
+        //     log.info('触发事件：addnode')
+        //     event.target.setExtData("addnode")
+        // })
+        //
+        // polyEditor.on('adjust', function(event) {
+        //
+        //    console.log(polyArray.indexOf(event.target))
+        //     log.info('触发事件：adjust')
+        //     event.target.setExtData("adjust")
+        //
+        // })
+        //
+        // polyEditor.on('removenode', function(event) {
+        //     log.info('触发事件：removenode')
+        //     event.target.setExtData("removenode")
+        // })
+
+
+        polyEditor.on('end', function(event) {
+        // console.log(event.target.getPath())
+            // event.target 即为编辑后的多边形对象
+            // alert(JSON.stringify(event.target.getPath()))
+            // console.log(event.target.getExtData())
+
+            log.info('保存成功')
+            // //库中有货,变更后才能保存   && event.target.getExtData().length>0
+            // alert(" #"+JSON.parse(localStorage.getItem("ps")).length)
+            // if (localStorage.getItem("ps") && event.target.getExtData()=="new"){
+            //     let oldPolygons=JSON.parse(localStorage.getItem("ps"))
+            //     console.log(oldPolygons)
+            //     oldPolygons.push(event.target.getPath())
+            //     localStorage.setItem("ps",JSON.stringify(oldPolygons))
+            //
+            // }else{//库中没货直接保存
+            //     localStorage.setItem("ps",JSON.stringify([event.target.getPath()]))
+            // }
+
+
+        })
+    }
+
+    //path结构转换 狗日的高德get set不匹配
+    function pathFormat(pathObjs){
+        xyArrays=[]
+        for(let i=0;i<pathObjs.length;i++){
+            xyArray=[]
+            let tempObj=pathObjs[i]
+            for(let j=0;j<tempObj.length;j++){
+                xyArray.push([tempObj[j]['Q'],tempObj[j]['P']])
+            }
+            xyArrays.push(xyArray)
+        }
+        return xyArrays
+    }
+
+    //操作所有编辑的图层
+    function contorlEdit(action){
+        for(let i=0;i<polyEditorArray.length;i++){
+            if(action=="open")
+                polyEditorArray[i].open()
+            else if(action=="close")
+                polyEditorArray[i].close()
+        }
+        if(action=="close"){
+            pathArray=[]
+            console.log(polyArray.length)
+            debugger
+            for(let j=0;j<polyArray.length;j++){
+                pathArray.push(polyArray[j].getPath())
+            }
+            //设置本地存储paths
+            localStorage.setItem("ps",JSON.stringify(pathArray))
+            //设置本地存储names
+            localStorage.setItem("names",JSON.stringify(areaNameArray))
+
+        }
+
+
+    }
+
+
+
+</script>
+</body>
+</html>
