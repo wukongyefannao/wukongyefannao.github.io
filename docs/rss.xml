@@ -1,5 +1,65 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>悟空也烦恼的博客</title><link>https://wukongyefannao.github.io</link><description>于大爷工具集  -   www.yudaye.site   - QQ:6686496</description><copyright>悟空也烦恼的博客</copyright><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://github.githubassets.com/favicons/favicon.svg</url><title>avatar</title><link>https://wukongyefannao.github.io</link></image><lastBuildDate>Mon, 30 Jun 2025 03:32:51 +0000</lastBuildDate><managingEditor>悟空也烦恼的博客</managingEditor><ttl>60</ttl><webMaster>悟空也烦恼的博客</webMaster><item><title>一键分析文本相似度！我用Streamlit开发了一个智能文本对比神器，于大爷.在线工具集</title><link>https://wukongyefannao.github.io/post/yi-jian-fen-xi-wen-ben-xiang-si-du-%EF%BC%81-wo-yong-Streamlit-kai-fa-le-yi-ge-zhi-neng-wen-ben-dui-bi-shen-qi-%EF%BC%8C-yu-da-ye-.-zai-xian-gong-ju-ji.html</link><description># 一键分析文本相似度！我用Streamlit开发了一个智能文本对比神器，于大爷.在线工具集
+<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>悟空也烦恼的博客</title><link>https://wukongyefannao.github.io</link><description>于大爷工具集  -   www.yudaye.site   - QQ:6686496</description><copyright>悟空也烦恼的博客</copyright><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://github.githubassets.com/favicons/favicon.svg</url><title>avatar</title><link>https://wukongyefannao.github.io</link></image><lastBuildDate>Wed, 20 Aug 2025 03:04:10 +0000</lastBuildDate><managingEditor>悟空也烦恼的博客</managingEditor><ttl>60</ttl><webMaster>悟空也烦恼的博客</webMaster><item><title>于大爷.在线工具集-9级Word标题一键生成！自己怒写“word带9级标题格式的多级编号在线自动生成工具”，彻底解决word多级编号痛点</title><link>https://wukongyefannao.github.io/post/yu-da-ye-.-zai-xian-gong-ju-ji--9-ji-Word-biao-ti-yi-jian-sheng-cheng-%EF%BC%81-zi-ji-nu-xie-%E2%80%9Cword-dai-9-ji-biao-ti-ge-shi-de-duo-ji-bian-hao-zai-xian-zi-dong-sheng-cheng-gong-ju-%E2%80%9D%EF%BC%8C-che-di-jie-jue-word-duo-ji-bian-hao-tong-dian.html</link><description>
+![在这里插入图片描述](https://i-blog.csdnimg.cn/direct/0a76fe400e46471c8594efc5c326558a.png)
+
+
+&gt; ✨ **无需复杂设置 | 9级标题自动编号 | 多种模板可选 | 直接下载使用 | 永久免费**
+
+## 一、痛点暴击：你还在为Word多级标题编号烦恼吗？
+
+- ❌ 手动设置多级标题格式耗时耗力
+- ❌ 编号层级混乱，调整困难
+- ❌ 不同文档格式不统一
+- ❌ 多级标题样式难以自定义
+- ❌ 重复工作效率低下
+
+## 二、拯救方案：Word标题格式自动生成工具
+**👉 直达链接：&lt;https://www.yudaye.site/docx_title_generator&gt;**  
+（手机/电脑免登录直接使用）
+
+### 2.1 核心功能一览
+- ✅ 9级标题自动编号：完美支持Word各级标题格式
+- ✅ 多种模板可选：提供6种常用多级编号样式
+- ✅ 实时预览：直观查看标题层级结构
+- ✅ 一键生成：输入标题文本，即刻生成完整文档
+- ✅ 直接下载：生成后可立即下载使用
+- 最后生成的word，嘎嘎好，如下图：
+![在这里插入图片描述](https://i-blog.csdnimg.cn/direct/99de5a58e68742018c26308b85bc29b1.png)
+
+
+### 2.2 技术特点
+- 🚀 基于Streamlit + python-docx开发
+- 🔒 全程本地处理，数据安全无忧
+- 🎨 内置多种专业模板，满足不同场景需求
+- 📱 移动端友好，随时随地使用
+- ⚡ 毫秒级生成，高效便捷
+
+## 三、核心代码展示
+
+### 3.1 基础配置与界面搭建
+```python
+import streamlit as st
+from docx import Document
+import io
+import os
+
+# 设置页面配置
+st.set_page_config(
+    page_title='word带9级标题格式的多级编号在线自动生成工具',
+    page_icon='📝',
+    layout='centered',
+    initial_sidebar_state='collapsed'
+)
+
+# 定义标题模板字典
+titleDict={
+    '(一)1(1)圈1半1A.a.a)i.':'''\n        (一)\n            1\n                (1)\n                    ➀\n                        1)\n                            A.\n                                a.\n                                    a)\n                                        i.\n    ''',
+    # 其他模板...
+}
+
+# 标题和介绍
+st.title('📝 word带9级标题格式的多级编号在线自动生成工具')
+st.markdown('通过选择不同的多级编号格式模板，快速生成带编号带标题格式的Word标题文档，直接下载使用，再也不用麻烦多级编号的问题。</description><guid isPermaLink="true">https://wukongyefannao.github.io/post/yu-da-ye-.-zai-xian-gong-ju-ji--9-ji-Word-biao-ti-yi-jian-sheng-cheng-%EF%BC%81-zi-ji-nu-xie-%E2%80%9Cword-dai-9-ji-biao-ti-ge-shi-de-duo-ji-bian-hao-zai-xian-zi-dong-sheng-cheng-gong-ju-%E2%80%9D%EF%BC%8C-che-di-jie-jue-word-duo-ji-bian-hao-tong-dian.html</guid><pubDate>Wed, 20 Aug 2025 03:03:41 +0000</pubDate></item><item><title>一键分析文本相似度！我用Streamlit开发了一个智能文本对比神器，于大爷.在线工具集</title><link>https://wukongyefannao.github.io/post/yi-jian-fen-xi-wen-ben-xiang-si-du-%EF%BC%81-wo-yong-Streamlit-kai-fa-le-yi-ge-zhi-neng-wen-ben-dui-bi-shen-qi-%EF%BC%8C-yu-da-ye-.-zai-xian-gong-ju-ji.html</link><description># 一键分析文本相似度！我用Streamlit开发了一个智能文本对比神器，于大爷.在线工具集
 
 ![于大爷.在线工具集，文本相似性分析](https://i-blog.csdnimg.cn/direct/813f8dabef024d3c868ac47c4fd86163.png)
 
