@@ -523,7 +523,7 @@ X      :      https://x.com/lazyisfast
 <meta property="og:url" content="https://wukongyefannao.github.io/post/MongoREST%20-%20Instant%20REST%20API%20for%20MongoDB%20Single-File%20Solution.%20Zero%20Code.%20Full%20Power.html">
 <meta property="og:image" content="https://github.githubassets.com/favicons/favicon.svg">
 <title>MongoREST - Instant REST API for MongoDB Single-File Solution. Zero Code. Full Power</title>
-<link href="//unpkg.com/@wooorm/starry-night@2.1.1/style/both.css" rel="stylesheet" />
+
 
 
 </head>
@@ -715,55 +715,59 @@ post url demo：<code class="notranslate">curl -X POST -H "Content-Type: applica
 <li><strong>Demo</strong>:</li>
 <li><strong>simple query</strong>: <code class="notranslate">http://localhost:8081/mongo?action=find&amp;collection=users&amp;db=sample_mflix&amp;limit=2&amp;filter={}</code></li>
 </ul>
-<div class="highlight highlight-source-json"><pre class="notranslate">[
+<pre lang="json" class="notranslate"><code class="notranslate">[
   {
-    <span class="pl-ent">"_id"</span>: <span class="pl-s"><span class="pl-pds">"</span>59b99db4cfa9a34dcd7885b7<span class="pl-pds">"</span></span>,
-    <span class="pl-ent">"email"</span>: <span class="pl-s"><span class="pl-pds">"</span>mark_addy@gameofthron.es<span class="pl-pds">"</span></span>,
-    <span class="pl-ent">"name"</span>: <span class="pl-s"><span class="pl-pds">"</span>Robert Baratheon<span class="pl-pds">"</span></span>,
-    <span class="pl-ent">"password"</span>: <span class="pl-s"><span class="pl-pds">"</span>$2b$12$yGqxLG9LZpXA2xVDhuPnSOZd.VURVkz7wgOLY3pnO0s7u2S1ZO32y<span class="pl-pds">"</span></span>
+    "_id": "59b99db4cfa9a34dcd7885b7",
+    "email": "mark_addy@gameofthron.es",
+    "name": "Robert Baratheon",
+    "password": "$2b$12$yGqxLG9LZpXA2xVDhuPnSOZd.VURVkz7wgOLY3pnO0s7u2S1ZO32y"
   },
   {
-    <span class="pl-ent">"_id"</span>: <span class="pl-s"><span class="pl-pds">"</span>59b99db6cfa9a34dcd7885ba<span class="pl-pds">"</span></span>,
-    <span class="pl-ent">"email"</span>: <span class="pl-s"><span class="pl-pds">"</span>lena_headey@gameofthron.es<span class="pl-pds">"</span></span>,
-    <span class="pl-ent">"name"</span>: <span class="pl-s"><span class="pl-pds">"</span>Cersei Lannister<span class="pl-pds">"</span></span>,
-    <span class="pl-ent">"password"</span>: <span class="pl-s"><span class="pl-pds">"</span>$2b$12$FExjgr7CLhNCa.oUsB9seub8mqcHzkJCFZ8heMc8CeIKOZfeTKP8m<span class="pl-pds">"</span></span>
+    "_id": "59b99db6cfa9a34dcd7885ba",
+    "email": "lena_headey@gameofthron.es",
+    "name": "Cersei Lannister",
+    "password": "$2b$12$FExjgr7CLhNCa.oUsB9seub8mqcHzkJCFZ8heMc8CeIKOZfeTKP8m"
   }
-]</pre></div>
+]
+</code></pre>
 <ul>
 <li><strong>Regex search</strong>: <code class="notranslate">localhost:8081/mongo?action=find&amp;collection=users&amp;db=sample_mflix&amp;limit=2&amp;filter={"name":{"$regex":"R"}}</code></li>
 </ul>
-<div class="highlight highlight-source-json"><pre class="notranslate">[
+<pre lang="json" class="notranslate"><code class="notranslate">[
  {
-   <span class="pl-ent">"_id"</span>: <span class="pl-s"><span class="pl-pds">"</span>59b99db4cfa9a34dcd7885b7<span class="pl-pds">"</span></span>,
-   <span class="pl-ent">"email"</span>: <span class="pl-s"><span class="pl-pds">"</span>mark_addy@gameofthron.es<span class="pl-pds">"</span></span>,
-   <span class="pl-ent">"name"</span>: <span class="pl-s"><span class="pl-pds">"</span>Robert Baratheon<span class="pl-pds">"</span></span>,
-   <span class="pl-ent">"password"</span>: <span class="pl-s"><span class="pl-pds">"</span>$2b$12$yGqxLG9LZpXA2xVDhuPnSOZd.VURVkz7wgOLY3pnO0s7u2S1ZO32y<span class="pl-pds">"</span></span>
+   "_id": "59b99db4cfa9a34dcd7885b7",
+   "email": "mark_addy@gameofthron.es",
+   "name": "Robert Baratheon",
+   "password": "$2b$12$yGqxLG9LZpXA2xVDhuPnSOZd.VURVkz7wgOLY3pnO0s7u2S1ZO32y"
  },
  {
-   <span class="pl-ent">"_id"</span>: <span class="pl-s"><span class="pl-pds">"</span>59b99dbacfa9a34dcd7885c2<span class="pl-pds">"</span></span>,
-   <span class="pl-ent">"email"</span>: <span class="pl-s"><span class="pl-pds">"</span>richard_madden@gameofthron.es<span class="pl-pds">"</span></span>,
-   <span class="pl-ent">"name"</span>: <span class="pl-s"><span class="pl-pds">"</span>Robb Stark<span class="pl-pds">"</span></span>,
-   <span class="pl-ent">"password"</span>: <span class="pl-s"><span class="pl-pds">"</span>$2b$12$XPLvWQW7tjWc/PX9jMVRnO8w.lR6hv144ee8pc8nDsWIAWxfwxHzy<span class="pl-pds">"</span></span>
+   "_id": "59b99dbacfa9a34dcd7885c2",
+   "email": "richard_madden@gameofthron.es",
+   "name": "Robb Stark",
+   "password": "$2b$12$XPLvWQW7tjWc/PX9jMVRnO8w.lR6hv144ee8pc8nDsWIAWxfwxHzy"
  }
-]</pre></div>
+]
+</code></pre>
 <ul>
 <li><strong>By ObjectId</strong>: <code class="notranslate">localhost:8081/mongo?action=find&amp;collection=users&amp;db=sample_mflix&amp;limit=2&amp;filter={"_id":{"$oid":"59b99dbacfa9a34dcd7885c2"}}</code></li>
 </ul>
-<div class="highlight highlight-source-json"><pre class="notranslate">[
+<pre lang="json" class="notranslate"><code class="notranslate">[
   {
-    <span class="pl-ent">"_id"</span>: <span class="pl-s"><span class="pl-pds">"</span>59b99dbacfa9a34dcd7885c2<span class="pl-pds">"</span></span>,
-    <span class="pl-ent">"email"</span>: <span class="pl-s"><span class="pl-pds">"</span>richard_madden@gameofthron.es<span class="pl-pds">"</span></span>,
-    <span class="pl-ent">"name"</span>: <span class="pl-s"><span class="pl-pds">"</span>Robb Stark<span class="pl-pds">"</span></span>,
-    <span class="pl-ent">"password"</span>: <span class="pl-s"><span class="pl-pds">"</span>$2b$12$XPLvWQW7tjWc/PX9jMVRnO8w.lR6hv144ee8pc8nDsWIAWxfwxHzy<span class="pl-pds">"</span></span>
+    "_id": "59b99dbacfa9a34dcd7885c2",
+    "email": "richard_madden@gameofthron.es",
+    "name": "Robb Stark",
+    "password": "$2b$12$XPLvWQW7tjWc/PX9jMVRnO8w.lR6hv144ee8pc8nDsWIAWxfwxHzy"
   }
-] </pre></div>
+] 
+</code></pre>
 <ul>
 <li><strong>Projection (only return _id &amp; email)</strong>: <code class="notranslate">localhost:8081/mongo?action=find&amp;collection=users&amp;db=sample_mflix&amp;limit=2&amp;filter={"_id":{"$oid":"59b99dbacfa9a34dcd7885c2"}}&amp;projection={"_id":true,"email":true}</code></li>
 <li><strong>Projection (clear _id)</strong>: <code class="notranslate">localhost:8081/mongo?action=find&amp;collection=users&amp;db=sample_mflix&amp;limit=2&amp;filter={"_id":{"$oid":"59b99dbacfa9a34dcd7885c2"}}&amp;projection={"_id":false}</code></li>
 <li><strong>Sorting (name ASC, email DESC)</strong>: <code class="notranslate">localhost:8081/mongo?action=find&amp;collection=users&amp;db=sample_mflix&amp;limit=5&amp;sort={"name":1,"email":-1}</code></li>
 <li><strong>Count only</strong>: <code class="notranslate">localhost:8081/mongo?action=count&amp;collection=users&amp;db=sample_mflix</code></li>
 </ul>
-<div class="highlight highlight-source-json"><pre class="notranslate">{<span class="pl-ent">"count"</span>:<span class="pl-c1">185</span>}</pre></div>
+<pre lang="json" class="notranslate"><code class="notranslate">{"count":185}
+</code></pre>
 <h4>2. Update</h4>
 <ul>
 <li>
@@ -785,39 +789,44 @@ post url demo：<code class="notranslate">curl -X POST -H "Content-Type: applica
 <p><em><strong>if update success,return updated document</strong></em>:</p>
 </li>
 </ul>
-<div class="highlight highlight-source-json"><pre class="notranslate">{
- <span class="pl-ent">"_id"</span>: <span class="pl-s"><span class="pl-pds">"</span>59b99dbacfa9a34dcd7885c2<span class="pl-pds">"</span></span>,
- <span class="pl-ent">"email"</span>: <span class="pl-s"><span class="pl-pds">"</span>richard_madden@gameofthron.es<span class="pl-pds">"</span></span>,
- <span class="pl-ent">"name"</span>: <span class="pl-s"><span class="pl-pds">"</span>11<span class="pl-pds">"</span></span>,
- <span class="pl-ent">"password"</span>: <span class="pl-s"><span class="pl-pds">"</span>$2b$12$XPLvWQW7tjWc/PX9jMVRnO8w.lR6hv144ee8pc8nDsWIAWxfwxHzy<span class="pl-pds">"</span></span>
-}</pre></div>
+<pre lang="json" class="notranslate"><code class="notranslate">{
+ "_id": "59b99dbacfa9a34dcd7885c2",
+ "email": "richard_madden@gameofthron.es",
+ "name": "11",
+ "password": "$2b$12$XPLvWQW7tjWc/PX9jMVRnO8w.lR6hv144ee8pc8nDsWIAWxfwxHzy"
+}
+</code></pre>
 <ul>
 <li><em><strong>if update failed,return count document</strong></em>:</li>
 </ul>
-<div class="highlight highlight-source-json"><pre class="notranslate">{<span class="pl-ent">"MatchedCount"</span>:<span class="pl-c1">0</span>,<span class="pl-ent">"ModifiedCount"</span>:<span class="pl-c1">0</span>,<span class="pl-ent">"UpsertedCount"</span>:<span class="pl-c1">0</span>}</pre></div>
+<pre lang="json" class="notranslate"><code class="notranslate">{"MatchedCount":0,"ModifiedCount":0,"UpsertedCount":0}
+</code></pre>
 <ul>
 <li>**upset更新 **: <code class="notranslate">localhost:8081/mongo?action=updateMany&amp;collection=users&amp;db=sample_mflix&amp;update={"$set":{"name":"999"}}&amp;filter={"name":"2342342342"}&amp;upset=1</code></li>
 <li><em><strong>UpsertedCount is one，mean upset 1 row</strong></em>:</li>
 </ul>
-<div class="highlight highlight-source-json"><pre class="notranslate">{
- <span class="pl-ent">"MatchedCount"</span>: <span class="pl-c1">0</span>,
- <span class="pl-ent">"ModifiedCount"</span>: <span class="pl-c1">0</span>,
- <span class="pl-ent">"UpsertedCount"</span>: <span class="pl-c1">1</span>
-}</pre></div>
+<pre lang="json" class="notranslate"><code class="notranslate">{
+ "MatchedCount": 0,
+ "ModifiedCount": 0,
+ "UpsertedCount": 1
+}
+</code></pre>
 <h4>3. Insert</h4>
 <ul>
 <li><strong>Action</strong>: <code class="notranslate">insertMany</code></li>
 <li><strong>Parameter</strong>: <code class="notranslate">insert</code> (JSON list string)</li>
 <li><strong>Demo</strong>: <code class="notranslate">localhost:8081/mongo?action=insertMany&amp;collection=users&amp;db=sample_mflix&amp;insert=[{"name":"01","user":"17","pwd":"01-17"}]</code></li>
 </ul>
-<div class="highlight highlight-source-json"><pre class="notranslate">{<span class="pl-ent">"InsertedCount"</span>:<span class="pl-c1">1</span>}</pre></div>
+<pre lang="json" class="notranslate"><code class="notranslate">{"InsertedCount":1}
+</code></pre>
 <h4>4. Delete</h4>
 <ul>
 <li><strong>Action</strong>: <code class="notranslate">deleteMany</code></li>
 <li><strong>Demo</strong>:<br>
 <code class="notranslate">localhost:8081/mongo?action=deleteMany&amp;collection=users&amp;db=sample_mflix&amp;filter={"name":"01"}</code></li>
 </ul>
-<div class="highlight highlight-source-json"><pre class="notranslate">{<span class="pl-ent">"DeletedCount"</span>:<span class="pl-c1">1</span>}</pre></div>
+<pre lang="json" class="notranslate"><code class="notranslate">{"DeletedCount":1}
+</code></pre>
 <h4>5. Aggregate</h4>
 <ul>
 <li><strong>Action</strong>: <code class="notranslate">aggregate</code></li>
@@ -833,16 +842,17 @@ post url demo：<code class="notranslate">curl -X POST -H "Content-Type: applica
 <li><strong>Demo</strong>:<br>
 <code class="notranslate">#localhost:8081/mongo?action=bulkWrite&amp;db=sample_mflix&amp;collection=users&amp;updates={"name":"Ned%20Stark"}&gt;-&lt;{"$set":{"password":"ggg111"}}&lt;-&gt;{"name":"Robert%20Baratheon"}&gt;-&lt;{"$set":{"password":"ggg222"}}</code></li>
 </ul>
-<div class="highlight highlight-source-json"><pre class="notranslate">{
-  <span class="pl-ent">"MatchedCount"</span>: <span class="pl-c1">2</span>,
-  <span class="pl-ent">"ModifiedCount"</span>: <span class="pl-c1">2</span>,
-  <span class="pl-ent">"UpsertedCount"</span>: <span class="pl-c1">0</span>,
-  <span class="pl-ent">"UpsertedIDs"</span>: {
+<pre lang="json" class="notranslate"><code class="notranslate">{
+  "MatchedCount": 2,
+  "ModifiedCount": 2,
+  "UpsertedCount": 0,
+  "UpsertedIDs": {
 
   },
-  <span class="pl-ent">"code"</span>: <span class="pl-c1">200</span>,
-  <span class="pl-ent">"msg"</span>: <span class="pl-s"><span class="pl-pds">"</span>success<span class="pl-pds">"</span></span>
-}</pre></div>
+  "code": 200,
+  "msg": "success"
+}
+</code></pre>
 <h2>Security &amp; Configuration</h2>
 <ul>
 <li><strong>NEVER expose the service to the public internet</strong> — use inside trusted networks only.</li>
