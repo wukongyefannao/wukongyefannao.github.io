@@ -137,7 +137,7 @@ st.markdown('通过选择不同的多级编号格式模板，快速生成带编�
 <meta property="og:url" content="https://wukongyefannao.github.io/post/yu-da-ye-.-zai-xian-gong-ju-ji--9-ji-Word-biao-ti-yi-jian-sheng-cheng-%EF%BC%81-zi-ji-nu-xie-%E2%80%9Cword-dai-9-ji-biao-ti-ge-shi-de-duo-ji-bian-hao-zai-xian-zi-dong-sheng-cheng-gong-ju-%E2%80%9D%EF%BC%8C-che-di-jie-jue-word-duo-ji-bian-hao-tong-dian.html">
 <meta property="og:image" content="https://github.githubassets.com/favicons/favicon.svg">
 <title>于大爷.在线工具集-9级Word标题一键生成！自己怒写“word带9级标题格式的多级编号在线自动生成工具”，彻底解决word多级编号痛点</title>
-<link href="//unpkg.com/@wooorm/starry-night@2.1.1/style/both.css" rel="stylesheet" />
+
 
 
 </head>
@@ -161,17 +161,7 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
     body {padding: 8px;}
     .postTitle{font-size:24px;}
 }
-.copy-feedback {
-    display: none;
-    position: absolute;
-    top: 10px;
-    right: 50px;
-    color: var(--color-fg-on-emphasis);
-    background-color: var(--color-fg-muted);
-    border-radius: 3px;
-    padding: 5px 8px;
-    font-size: 12px;
-}
+
 </style>
 
 
@@ -238,97 +228,100 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 </ul>
 <h2>三、核心代码展示</h2>
 <h3>3.1 基础配置与界面搭建</h3>
-<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-k">import</span> <span class="pl-s1">streamlit</span> <span class="pl-k">as</span> <span class="pl-s1">st</span>
-<span class="pl-k">from</span> <span class="pl-s1">docx</span> <span class="pl-k">import</span> <span class="pl-v">Document</span>
-<span class="pl-k">import</span> <span class="pl-s1">io</span>
-<span class="pl-k">import</span> <span class="pl-s1">os</span>
+<pre lang="python" class="notranslate"><code class="notranslate">import streamlit as st
+from docx import Document
+import io
+import os
 
-<span class="pl-c"># 设置页面配置</span>
-<span class="pl-s1">st</span>.<span class="pl-c1">set_page_config</span>(
-    <span class="pl-s1">page_title</span><span class="pl-c1">=</span><span class="pl-s">"word带9级标题格式的多级编号在线自动生成工具"</span>,
-    <span class="pl-s1">page_icon</span><span class="pl-c1">=</span><span class="pl-s">"📝"</span>,
-    <span class="pl-s1">layout</span><span class="pl-c1">=</span><span class="pl-s">"centered"</span>,
-    <span class="pl-s1">initial_sidebar_state</span><span class="pl-c1">=</span><span class="pl-s">"collapsed"</span>
+# 设置页面配置
+st.set_page_config(
+    page_title="word带9级标题格式的多级编号在线自动生成工具",
+    page_icon="📝",
+    layout="centered",
+    initial_sidebar_state="collapsed"
 )
 
-<span class="pl-c"># 定义标题模板字典</span>
-<span class="pl-s1">titleDict</span><span class="pl-c1">=</span>{
-    <span class="pl-s">"(一)1(1)圈1半1A.a.a)i."</span>:<span class="pl-s">'''<span class="pl-cce">\n</span>        (一)<span class="pl-cce">\n</span>            1<span class="pl-cce">\n</span>                (1)<span class="pl-cce">\n</span>                    ➀<span class="pl-cce">\n</span>                        1)<span class="pl-cce">\n</span>                            A.<span class="pl-cce">\n</span>                                a.<span class="pl-cce">\n</span>                                    a)<span class="pl-cce">\n</span>                                        i.<span class="pl-cce">\n</span>    '''</span>,
-    <span class="pl-c"># 其他模板...</span>
+# 定义标题模板字典
+titleDict={
+    "(一)1(1)圈1半1A.a.a)i.":'''\n        (一)\n            1\n                (1)\n                    ➀\n                        1)\n                            A.\n                                a.\n                                    a)\n                                        i.\n    ''',
+    # 其他模板...
 }
 
-<span class="pl-c"># 标题和介绍</span>
-<span class="pl-s1">st</span>.<span class="pl-c1">title</span>(<span class="pl-s">"📝 word带9级标题格式的多级编号在线自动生成工具"</span>)
-<span class="pl-s1">st</span>.<span class="pl-c1">markdown</span>(<span class="pl-s">"通过选择不同的多级编号格式模板，快速生成带编号带标题格式的Word标题文档，直接下载使用，再也不用麻烦多级编号的问题。"</span>)</pre></div>
+# 标题和介绍
+st.title("📝 word带9级标题格式的多级编号在线自动生成工具")
+st.markdown("通过选择不同的多级编号格式模板，快速生成带编号带标题格式的Word标题文档，直接下载使用，再也不用麻烦多级编号的问题。")
+</code></pre>
 <h3>3.2 模板选择与预览实现</h3>
-<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-c"># 配置区域</span>
-<span class="pl-s1">st</span>.<span class="pl-c1">subheader</span>(<span class="pl-s">"🔧 配置选项"</span>)
+<pre lang="python" class="notranslate"><code class="notranslate"># 配置区域
+st.subheader("🔧 配置选项")
 
-<span class="pl-c"># 第一行：模板选择和标题输入</span>
-<span class="pl-s1">col_template</span>, <span class="pl-s1">col_title</span> <span class="pl-c1">=</span> <span class="pl-s1">st</span>.<span class="pl-c1">columns</span>([<span class="pl-c1">1</span>, <span class="pl-c1">1</span>])
+# 第一行：模板选择和标题输入
+col_template, col_title = st.columns([1, 1])
 
-<span class="pl-k">with</span> <span class="pl-s1">col_template</span>:
-    <span class="pl-c"># 选择模板</span>
-    <span class="pl-s1">selected_template_key</span> <span class="pl-c1">=</span> <span class="pl-s1">st</span>.<span class="pl-c1">selectbox</span>(
-        <span class="pl-s">"选择多级编号格式模板"</span>,
-        <span class="pl-en">list</span>(<span class="pl-s1">titleDict</span>.<span class="pl-c1">keys</span>()),
-        <span class="pl-s1">format_func</span><span class="pl-c1">=</span><span class="pl-k">lambda</span> <span class="pl-s1">x</span>: <span class="pl-s1">x</span>
+with col_template:
+    # 选择模板
+    selected_template_key = st.selectbox(
+        "选择多级编号格式模板",
+        list(titleDict.keys()),
+        format_func=lambda x: x
     )
-    <span class="pl-c"># 显示选择的模板对应的标题层级预览</span>
-    <span class="pl-s1">st</span>.<span class="pl-c1">text_area</span>(<span class="pl-s">"标题层级预览"</span>, <span class="pl-s1">titleDict</span>[<span class="pl-s1">selected_template_key</span>], <span class="pl-s1">height</span><span class="pl-c1">=</span><span class="pl-c1">150</span>)
+    # 显示选择的模板对应的标题层级预览
+    st.text_area("标题层级预览", titleDict[selected_template_key], height=150)
 
-<span class="pl-c"># 获取对应的模板文件名</span>
-<span class="pl-s1">selected_template</span> <span class="pl-c1">=</span> <span class="pl-s1">selected_template_key</span> <span class="pl-c1">+</span> <span class="pl-s">".docx"</span>
+# 获取对应的模板文件名
+selected_template = selected_template_key + ".docx"
 
-<span class="pl-k">with</span> <span class="pl-s1">col_title</span>:
-    <span class="pl-c"># 输入标题</span>
-    <span class="pl-s1">title_text</span> <span class="pl-c1">=</span> <span class="pl-s1">st</span>.<span class="pl-c1">text_input</span>(
-        <span class="pl-s">"输入标题文本"</span>,
-        <span class="pl-s1">value</span><span class="pl-c1">=</span><span class="pl-s">"文档标题"</span>,
-        <span class="pl-s1">placeholder</span><span class="pl-c1">=</span><span class="pl-s">"请输入要生成的标题文本"</span>
+with col_title:
+    # 输入标题
+    title_text = st.text_input(
+        "输入标题文本",
+        value="文档标题",
+        placeholder="请输入要生成的标题文本"
     )
 
-<span class="pl-c"># 第二行：生成按钮</span>
-<span class="pl-s1">generate_btn</span> <span class="pl-c1">=</span> <span class="pl-s1">st</span>.<span class="pl-c1">button</span>(<span class="pl-s">"生成Word文档"</span>, <span class="pl-s1">type</span><span class="pl-c1">=</span><span class="pl-s">"primary"</span>, <span class="pl-s1">use_container_width</span><span class="pl-c1">=</span><span class="pl-c1">True</span>)</pre></div>
+# 第二行：生成按钮
+generate_btn = st.button("生成Word文档", type="primary", use_container_width=True)
+</code></pre>
 <h3>3.3 文档生成核心逻辑</h3>
-<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-k">if</span> <span class="pl-s1">generate_btn</span>:
-    <span class="pl-k">if</span> <span class="pl-c1">not</span> <span class="pl-s1">title_text</span>.<span class="pl-c1">strip</span>():
-        <span class="pl-s1">st</span>.<span class="pl-c1">error</span>(<span class="pl-s">"请输入有效的标题文本"</span>)
-    <span class="pl-k">else</span>:
-        <span class="pl-k">try</span>:
-            <span class="pl-c"># 显示加载状态</span>
-            <span class="pl-k">with</span> <span class="pl-s1">st</span>.<span class="pl-c1">spinner</span>(<span class="pl-s">"正在生成文档..."</span>):
-                <span class="pl-c"># 加载模板</span>
-                <span class="pl-s1">template_path</span> <span class="pl-c1">=</span> <span class="pl-s1">os</span>.<span class="pl-c1">path</span>.<span class="pl-c1">join</span>(<span class="pl-c1">TEMPLATE_DIR</span>, <span class="pl-s1">selected_template</span>)
-                <span class="pl-s1">doc</span> <span class="pl-c1">=</span> <span class="pl-en">Document</span>(<span class="pl-s1">template_path</span>)
+<pre lang="python" class="notranslate"><code class="notranslate">if generate_btn:
+    if not title_text.strip():
+        st.error("请输入有效的标题文本")
+    else:
+        try:
+            # 显示加载状态
+            with st.spinner("正在生成文档..."):
+                # 加载模板
+                template_path = os.path.join(TEMPLATE_DIR, selected_template)
+                doc = Document(template_path)
 
-                <span class="pl-c"># 清空文档内容（保留样式）</span>
-                <span class="pl-k">for</span> <span class="pl-s1">para</span> <span class="pl-c1">in</span> <span class="pl-s1">doc</span>.<span class="pl-c1">paragraphs</span>:
-                    <span class="pl-k">if</span> <span class="pl-s1">para</span>.<span class="pl-c1">text</span>.<span class="pl-c1">strip</span>():
-                        <span class="pl-s1">para</span>.<span class="pl-c1">text</span> <span class="pl-c1">=</span> <span class="pl-s">""</span>
+                # 清空文档内容（保留样式）
+                for para in doc.paragraphs:
+                    if para.text.strip():
+                        para.text = ""
 
-                <span class="pl-c"># 生成9级标题</span>
-                <span class="pl-k">for</span> <span class="pl-s1">i</span> <span class="pl-c1">in</span> <span class="pl-en">range</span>(<span class="pl-c1">9</span>):
-                    <span class="pl-s1">level</span> <span class="pl-c1">=</span> <span class="pl-s1">i</span> <span class="pl-c1">+</span> <span class="pl-c1">1</span>
-                    <span class="pl-s1">heading_text</span> <span class="pl-c1">=</span> <span class="pl-s">f"<span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">title_text</span><span class="pl-kos">}</span></span> <span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">level</span><span class="pl-kos">}</span></span>"</span>
-                    <span class="pl-s1">doc</span>.<span class="pl-c1">add_paragraph</span>(<span class="pl-s1">heading_text</span>, <span class="pl-s1">style</span><span class="pl-c1">=</span><span class="pl-s">f"Heading <span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">level</span><span class="pl-kos">}</span></span>"</span>)
+                # 生成9级标题
+                for i in range(9):
+                    level = i + 1
+                    heading_text = f"{title_text} {level}"
+                    doc.add_paragraph(heading_text, style=f"Heading {level}")
 
-                <span class="pl-c"># 保存到内存缓冲区</span>
-                <span class="pl-s1">buffer</span> <span class="pl-c1">=</span> <span class="pl-s1">io</span>.<span class="pl-c1">BytesIO</span>()
-                <span class="pl-s1">doc</span>.<span class="pl-c1">save</span>(<span class="pl-s1">buffer</span>)
-                <span class="pl-s1">buffer</span>.<span class="pl-c1">seek</span>(<span class="pl-c1">0</span>)
+                # 保存到内存缓冲区
+                buffer = io.BytesIO()
+                doc.save(buffer)
+                buffer.seek(0)
 
-                <span class="pl-c"># 提供下载</span>
-                <span class="pl-s1">st</span>.<span class="pl-c1">success</span>(<span class="pl-s">"文档生成成功！"</span>)
-                <span class="pl-s1">st</span>.<span class="pl-c1">download_button</span>(
-                    <span class="pl-s1">label</span><span class="pl-c1">=</span><span class="pl-s">"下载Word文档"</span>,
-                    <span class="pl-s1">data</span><span class="pl-c1">=</span><span class="pl-s1">buffer</span>,
-                    <span class="pl-s1">file_name</span><span class="pl-c1">=</span><span class="pl-s">f"<span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">title_text</span><span class="pl-kos">}</span></span>_多级标题.docx"</span>,
-                    <span class="pl-s1">mime</span><span class="pl-c1">=</span><span class="pl-s">"application/vnd.openxmlformats-officedocument.wordprocessingml.document"</span>,
-                    <span class="pl-s1">type</span><span class="pl-c1">=</span><span class="pl-s">"primary"</span>
+                # 提供下载
+                st.success("文档生成成功！")
+                st.download_button(
+                    label="下载Word文档",
+                    data=buffer,
+                    file_name=f"{title_text}_多级标题.docx",
+                    mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+                    type="primary"
                 )
-        <span class="pl-k">except</span> <span class="pl-v">Exception</span> <span class="pl-k">as</span> <span class="pl-s1">e</span>:
-            <span class="pl-s1">st</span>.<span class="pl-c1">error</span>(<span class="pl-s">f"生成文档时出错: <span class="pl-s1"><span class="pl-kos">{</span><span class="pl-en">str</span>(<span class="pl-s1">e</span>)<span class="pl-kos">}</span></span>"</span>)</pre></div>
+        except Exception as e:
+            st.error(f"生成文档时出错: {str(e)}")
+</code></pre>
 <h2>四、使用指南</h2>
 <ol>
 <li><strong>选择模板</strong>：在下拉菜单中选择适合的多级编号格式模板</li>
@@ -374,7 +367,7 @@ if(""!=""){
 </script></div>
 </body>
 <script>
-var IconList={'sun': 'M8 10.5a2.5 2.5 0 100-5 2.5 2.5 0 000 5zM8 12a4 4 0 100-8 4 4 0 000 8zM8 0a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0V.75A.75.75 0 018 0zm0 13a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0v-1.5A.75.75 0 018 13zM2.343 2.343a.75.75 0 011.061 0l1.06 1.061a.75.75 0 01-1.06 1.06l-1.06-1.06a.75.75 0 010-1.06zm9.193 9.193a.75.75 0 011.06 0l1.061 1.06a.75.75 0 01-1.06 1.061l-1.061-1.06a.75.75 0 010-1.061zM16 8a.75.75 0 01-.75.75h-1.5a.75.75 0 010-1.5h1.5A.75.75 0 0116 8zM3 8a.75.75 0 01-.75.75H.75a.75.75 0 010-1.5h1.5A.75.75 0 013 8zm10.657-5.657a.75.75 0 010 1.061l-1.061 1.06a.75.75 0 11-1.06-1.06l1.06-1.06a.75.75 0 011.06 0zm-9.193 9.193a.75.75 0 010 1.06l-1.06 1.061a.75.75 0 11-1.061-1.06l1.06-1.061a.75.75 0 011.061 0z', 'moon': 'M9.598 1.591a.75.75 0 01.785-.175 7 7 0 11-8.967 8.967.75.75 0 01.961-.96 5.5 5.5 0 007.046-7.046.75.75 0 01.175-.786zm1.616 1.945a7 7 0 01-7.678 7.678 5.5 5.5 0 107.678-7.678z', 'sync': 'M1.705 8.005a.75.75 0 0 1 .834.656 5.5 5.5 0 0 0 9.592 2.97l-1.204-1.204a.25.25 0 0 1 .177-.427h3.646a.25.25 0 0 1 .25.25v3.646a.25.25 0 0 1-.427.177l-1.38-1.38A7.002 7.002 0 0 1 1.05 8.84a.75.75 0 0 1 .656-.834ZM8 2.5a5.487 5.487 0 0 0-4.131 1.869l1.204 1.204A.25.25 0 0 1 4.896 6H1.25A.25.25 0 0 1 1 5.75V2.104a.25.25 0 0 1 .427-.177l1.38 1.38A7.002 7.002 0 0 1 14.95 7.16a.75.75 0 0 1-1.49.178A5.5 5.5 0 0 0 8 2.5Z', 'home': 'M6.906.664a1.749 1.749 0 0 1 2.187 0l5.25 4.2c.415.332.657.835.657 1.367v7.019A1.75 1.75 0 0 1 13.25 15h-3.5a.75.75 0 0 1-.75-.75V9H7v5.25a.75.75 0 0 1-.75.75h-3.5A1.75 1.75 0 0 1 1 13.25V6.23c0-.531.242-1.034.657-1.366l5.25-4.2Zm1.25 1.171a.25.25 0 0 0-.312 0l-5.25 4.2a.25.25 0 0 0-.094.196v7.019c0 .138.112.25.25.25H5.5V8.25a.75.75 0 0 1 .75-.75h3.5a.75.75 0 0 1 .75.75v5.25h2.75a.25.25 0 0 0 .25-.25V6.23a.25.25 0 0 0-.094-.195Z', 'github': 'M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z', 'copy': 'M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z', 'check': 'M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z'};
+var IconList={'sun': 'M8 10.5a2.5 2.5 0 100-5 2.5 2.5 0 000 5zM8 12a4 4 0 100-8 4 4 0 000 8zM8 0a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0V.75A.75.75 0 018 0zm0 13a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0v-1.5A.75.75 0 018 13zM2.343 2.343a.75.75 0 011.061 0l1.06 1.061a.75.75 0 01-1.06 1.06l-1.06-1.06a.75.75 0 010-1.06zm9.193 9.193a.75.75 0 011.06 0l1.061 1.06a.75.75 0 01-1.06 1.061l-1.061-1.06a.75.75 0 010-1.061zM16 8a.75.75 0 01-.75.75h-1.5a.75.75 0 010-1.5h1.5A.75.75 0 0116 8zM3 8a.75.75 0 01-.75.75H.75a.75.75 0 010-1.5h1.5A.75.75 0 013 8zm10.657-5.657a.75.75 0 010 1.061l-1.061 1.06a.75.75 0 11-1.06-1.06l1.06-1.06a.75.75 0 011.06 0zm-9.193 9.193a.75.75 0 010 1.06l-1.06 1.061a.75.75 0 11-1.061-1.06l1.06-1.061a.75.75 0 011.061 0z', 'moon': 'M9.598 1.591a.75.75 0 01.785-.175 7 7 0 11-8.967 8.967.75.75 0 01.961-.96 5.5 5.5 0 007.046-7.046.75.75 0 01.175-.786zm1.616 1.945a7 7 0 01-7.678 7.678 5.5 5.5 0 107.678-7.678z', 'sync': 'M1.705 8.005a.75.75 0 0 1 .834.656 5.5 5.5 0 0 0 9.592 2.97l-1.204-1.204a.25.25 0 0 1 .177-.427h3.646a.25.25 0 0 1 .25.25v3.646a.25.25 0 0 1-.427.177l-1.38-1.38A7.002 7.002 0 0 1 1.05 8.84a.75.75 0 0 1 .656-.834ZM8 2.5a5.487 5.487 0 0 0-4.131 1.869l1.204 1.204A.25.25 0 0 1 4.896 6H1.25A.25.25 0 0 1 1 5.75V2.104a.25.25 0 0 1 .427-.177l1.38 1.38A7.002 7.002 0 0 1 14.95 7.16a.75.75 0 0 1-1.49.178A5.5 5.5 0 0 0 8 2.5Z', 'home': 'M6.906.664a1.749 1.749 0 0 1 2.187 0l5.25 4.2c.415.332.657.835.657 1.367v7.019A1.75 1.75 0 0 1 13.25 15h-3.5a.75.75 0 0 1-.75-.75V9H7v5.25a.75.75 0 0 1-.75.75h-3.5A1.75 1.75 0 0 1 1 13.25V6.23c0-.531.242-1.034.657-1.366l5.25-4.2Zm1.25 1.171a.25.25 0 0 0-.312 0l-5.25 4.2a.25.25 0 0 0-.094.196v7.019c0 .138.112.25.25.25H5.5V8.25a.75.75 0 0 1 .75-.75h3.5a.75.75 0 0 1 .75.75v5.25h2.75a.25.25 0 0 0 .25-.25V6.23a.25.25 0 0 0-.094-.195Z', 'github': 'M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z'};
 var utterancesLoad=0;
 
 let themeSettings={
@@ -447,70 +440,7 @@ function iFrameLoading(){
     }
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-    const createClipboardHTML = (codeContent, additionalClasses = '') => `
-        <pre class="notranslate"><code class="notranslate">${codeContent}</code></pre>
-        <div class="clipboard-container position-absolute right-0 top-0 ${additionalClasses}">
-            <clipboard-copy class="ClipboardButton btn m-2 p-0" role="button" style="display: inherit;">
-                <svg height="16" width="16" class="octicon octicon-copy m-2"><path d="${IconList["copy"]}"></path></svg>
-                <svg height="16" width="16" class="octicon octicon-check color-fg-success m-2 d-none"><path d="${IconList["check"]}"></path></svg>
-            </clipboard-copy>
-            <div class="copy-feedback">Copied!</div>
-        </div>
-    `;
 
-    const handleCodeElements = (selector = '') => {
-        document.querySelectorAll(selector).forEach(codeElement => {
-            const codeContent = codeElement.innerHTML;
-            const newStructure = document.createElement('div');
-            newStructure.className = 'snippet-clipboard-content position-relative overflow-auto';
-            newStructure.innerHTML = createClipboardHTML(codeContent);
-
-            const parentElement = codeElement.parentElement;
-            if (selector.includes('highlight')) {
-                parentElement.insertBefore(newStructure, codeElement.nextSibling);
-                parentElement.removeChild(codeElement);
-            } else {
-                parentElement.parentElement.replaceChild(newStructure, parentElement);
-            }
-        });
-    };
-
-    handleCodeElements('pre.notranslate > code.notranslate');
-    handleCodeElements('div.highlight > pre.notranslate');
-
-    let currentFeedback = null;
-    document.querySelectorAll('clipboard-copy').forEach(copyButton => {
-        copyButton.addEventListener('click', () => {
-            const codeContent = copyButton.closest('.snippet-clipboard-content').innerText;
-            const tempTextArea = document.createElement('textarea');
-            tempTextArea.value = codeContent;
-            document.body.appendChild(tempTextArea);
-            tempTextArea.select();
-            document.execCommand('copy');
-            document.body.removeChild(tempTextArea);
-
-            const copyIcon = copyButton.querySelector('.octicon-copy');
-            const checkIcon = copyButton.querySelector('.octicon-check');
-            const copyFeedback = copyButton.nextElementSibling;
-
-            if (currentFeedback && currentFeedback !== copyFeedback) {currentFeedback.style.display = 'none';}
-            currentFeedback = copyFeedback;
-
-            copyIcon.classList.add('d-none');
-            checkIcon.classList.remove('d-none');
-            copyFeedback.style.display = 'block';
-            copyButton.style.borderColor = 'var(--color-success-fg)';
-
-            setTimeout(() => {
-                copyIcon.classList.remove('d-none');
-                checkIcon.classList.add('d-none');
-                copyFeedback.style.display = 'none';
-                copyButton.style.borderColor = '';
-            }, 2000);
-        });
-    });
-});
 
 </script>
 <script src='https://blog.meekdai.com/Gmeek/plugins/GmeekTOC.js'></script><script src='https://blog.meekdai.com/Gmeek/plugins/lightbox.js'></script>
